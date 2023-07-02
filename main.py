@@ -1,10 +1,12 @@
 import sys
 import pygame
-import constans
+from constans import *
+
 
 pygame.init()
-screen = pygame.display.set_mode((constans.WIDTH, constans.HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tic Tac Toe AI")
+screen.fill(BG_COLOR)
 
 
 def main():
@@ -13,6 +15,7 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+        pygame.display.update()
 
 
 main()
