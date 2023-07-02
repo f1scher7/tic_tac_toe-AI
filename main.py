@@ -39,6 +39,20 @@ class Game:
         pygame.draw.line(screen, LINE_COLOR, (0, SQ_SIZE), (WIDTH, SQ_SIZE), LINE_WIDTH)
         pygame.draw.line(screen, LINE_COLOR, (0, 2 * SQ_SIZE), (WIDTH, SQ_SIZE * 2), LINE_WIDTH)
 
+    def draw_fig(self, row, col):
+        if self.player == 2:
+            # desc line
+            start_desc = (col * SQ_SIZE + OFFSET, row * SQ_SIZE + OFFSET)
+            end_desc = (col * SQ_SIZE + SQ_SIZE - OFFSET, row * SQ_SIZE + SQ_SIZE - OFFSET)
+            pygame.draw.line(screen, CROSS_COLOR, start_desc, end_desc, CROSS_WIDTH)
+            # asc line
+            start_asc = (col * SQ_SIZE + OFFSET, row * SQ_SIZE + SQ_SIZE - OFFSET)
+            end_asc = (col * SQ_SIZE + SQ_SIZE - OFFSET, row * SQ_SIZE + OFFSET)
+            pygame.draw.line(screen, CROSS_COLOR, start_asc, end_asc, CROSS_WIDTH)
+        elif self.player == 1:
+            center = (col * SQ_SIZE + SQ_SIZE//2, row * SQ_SIZE + SQ_SIZE//2)
+            pygame.draw.circle(screen, CIRCLE_COLOR, center, RADIUS, CIRCLE_WIDTH)
+
     def next_turn(self):
         self.player = self.player % 2 + 1
 
@@ -72,7 +86,7 @@ def main():
                     """
                     board.mark_squares(row, col, game.player)
                     game.next_turn()
-                    print(board.squares)
+                    game.draw_fig(row, col)
 
         pygame.display.update()
 
