@@ -70,7 +70,8 @@ def main():
                         board.mark_squares(row, col, 2)
                     inc += 1
                     """
-                    board.mark_squares(row, col, 1)
+                    board.mark_squares(row, col, game.player)
+                    game.next_turn()
                     print(board.squares)
 
         pygame.display.update()
