@@ -14,14 +14,35 @@ screen.fill(BG_COLOR)
 class Board:
     def __init__(self):
         self.squares = np.zeros((ROWS, COLS), dtype=int)
+        self.empty_squares = self.squares
+        self.marked_squares = 0
 
     def mark_squares(self, row, col, player):
         self.squares[row][col] = player
+        self.marked_squares += 1
 
     def is_square_empty(self, row, col):
         if self.squares[row][col] != 0:
             return False
         return True
+
+    def empty_squares(self):
+        empty_squares = []
+        for row in range(ROWS):
+            for col in range(COLS):
+                if self.is_square_empty(row, col):
+                    empty_squares.append((row, col))
+        return empty_squares
+
+    def is_board_full(self):
+        if self.marked_squares == 9:
+            return True
+        return False
+
+    def is_board_empty(self):
+        if self.marked_squares == 0:
+            return True
+        return False
 
 
 class Game:
