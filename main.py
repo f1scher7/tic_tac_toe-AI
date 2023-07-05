@@ -17,6 +17,58 @@ class Board:
         self.empty_squares = self.squares
         self.marked_squares = 0
 
+    def final_state(self):
+        """
+        @return 0 if there is a tie
+        @return 1 if player 1. wins
+        @return 2 if player 2. wins
+        """
+
+        # vertical wins
+        for col in range(COLS):
+            if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] == 1:
+                return 1
+            if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] == 2:
+                return 2
+            """
+            if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] != 0:
+                return self.squares[0][col]
+            """
+
+        # horizontal wins
+        for row in range(ROWS):
+            if self.squares[row][0] == self.squares[row][1] == self.squares[row][0] != 0:
+                return self.squares[row][0]
+
+        # first diagonal
+        first_diagonal = []
+        for row in range(ROWS):
+            for col in range(COLS):
+                if row == col:
+                    first_diagonal.append(self.squares[row][col])
+        if first_diagonal.count(1) == len(first_diagonal):
+            return 1
+        if first_diagonal.count(2) == len(first_diagonal):
+            return 2
+
+        # second diagonal
+        reversed_board = self.squares[::-1]
+        second_diagonal = []
+        for row in range(ROWS):
+            for col in range(COLS):
+                if row == col:
+                    second_diagonal.append(reversed_board[row][col])
+        if second_diagonal.count(1) == len(second_diagonal):
+            return 1
+        if second_diagonal.count(2) == len(second_diagonal):
+            return 2
+
+        del reversed_board
+        del first_diagonal
+        del second_diagonal
+
+        return 0
+
     def mark_squares(self, row, col, player):
         self.squares[row][col] = player
         self.marked_squares += 1
