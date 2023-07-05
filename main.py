@@ -101,7 +101,10 @@ class Game:
 
     def __init__(self):
         self.board = Board()
+        # self.ai = AI()
         self.player = 1
+        self.game_mode = "pvp"  # pvp or ai
+        self.running = True
         self.show_lines()
 
     def show_lines(self):
