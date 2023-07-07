@@ -1,7 +1,7 @@
 import sys
 import pygame
 import numpy as np
-
+from random import randrange
 from constans import *
 
 
@@ -95,6 +95,26 @@ class Board:
         if self.marked_squares == 0:
             return True
         return False
+
+
+class AI:
+    def __init__(self, level=0, player=1):
+        self.level = level
+        self.player = player
+
+    @property
+    def random_choice(self):
+        empty_squares = Board.empty_squares()
+        rnd_index = randrange(0, len(empty_squares))
+        return empty_squares[rnd_index]     # return (row, col)
+
+    def eval(self, main_board):
+        if self.level == 0:
+            # random choice
+            pass
+        else:
+            # minimax algorythm choice
+            pass
 
 
 class Game:
