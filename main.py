@@ -102,19 +102,20 @@ class AI:
         self.level = level
         self.player = player
 
-    @property
-    def random_choice(self):
-        empty_squares = Board.empty_squares()
+    def random_choice(self, board):
+        empty_squares = board.empty_squares()
         rnd_index = randrange(0, len(empty_squares))
         return empty_squares[rnd_index]     # return (row, col)
 
     def eval(self, main_board):
         if self.level == 0:
             # random choice
-            pass
+            move = self.random_choice(main_board)
         else:
             # minimax algorythm choice
             pass
+
+        return move
 
 
 class Game:
