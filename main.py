@@ -98,7 +98,7 @@ class Board:
 
 
 class AI:
-    def __init__(self, level=0, player=2):
+    def __init__(self, level=1, player=2):
         self.level = level
         self.player = player
 
@@ -126,10 +126,10 @@ class AI:
             empty_squares = board.empty_squares()
             for (row, col) in empty_squares:
                 temp_board = copy.deepcopy(board)
-                temp_board.mark_squares(row, col, self.player)
-                eval = self.minimax(temp_board, True)[0]
+                temp_board.mark_squares(row, col, 1)
+                eval = self.minimax(temp_board, False)[0]
                 if eval > max_eval:
-                    min_move = eval
+                    max_eval = eval
                     best_move = (row, col)
 
             return max_eval, best_move
@@ -150,11 +150,14 @@ class AI:
     def eval(self, main_board):
         if self.level == 0:
             # random choice
-            return self.random_choice(main_board)
+            eval = "random"
+            move = self.random_choice(main_board)
 
         else:
             # minimax algorythm choice
-            self.minimax(main_board, False)
+            eval, move = self.minimax(main_board, False)
+        print(f'AI has chosen to mark the square in pos {move} with an eval {eval}')
+        return move
 
 
 class Game:
