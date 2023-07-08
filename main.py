@@ -2,6 +2,7 @@ import copy
 import sys
 import pygame
 import numpy as np
+
 from random import randrange
 from constans import *
 
@@ -171,6 +172,11 @@ class Game:
         self.running = True
         self.show_lines()
 
+    def draw_move(self, row, col):
+        self.board.mark_squares(row, col, self.player)
+        self.next_turn()
+        self.draw_fig(row, col)
+
     def show_lines(self):
         # vertical
         pygame.draw.line(screen, LINE_COLOR, (SQ_SIZE, 0), (SQ_SIZE, HEIGHT), LINE_WIDTH)
@@ -218,17 +224,13 @@ def main():
                 col = click_pos[0] // SQ_SIZE
 
                 if board.is_square_empty(row, col):
-                    board.mark_squares(row, col, game.player)
-                    game.next_turn()
-                    game.draw_fig(row, col)
+                    game.draw_move(row, col)
 
         if game.game_mode == "ai" and game.player == ai.player:
             pygame.display.update()
             row, col = ai.eval(board)
-            board.mark_squares(row, col, ai.player)
-            game.next_turn()
             pygame.time.delay(500)
-            game.draw_fig(row, col)
+            game.draw_move(row, col)
 
         pygame.display.update()
 
