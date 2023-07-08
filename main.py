@@ -1,3 +1,4 @@
+import copy
 import sys
 import pygame
 import numpy as np
@@ -97,7 +98,7 @@ class Board:
 
 
 class AI:
-    def __init__(self, level=0, player=1):
+    def __init__(self, level=0, player=2):
         self.level = level
         self.player = player
 
@@ -106,6 +107,46 @@ class AI:
         rnd_index = randrange(0, len(empty_squares))
         return empty_squares[rnd_index]     # return (row, col)
 
+    def minimax(self, board, maximizing):
+        # terminal case
+        case = board.final_state()
+        # player 1 wins
+        if case == 1:
+            return 1, None
+        # player 2 wins
+        if case == 2:
+            return -1, None
+        # tie
+        elif board.is_board_full():
+            return 0, None
+
+        if maximizing:
+            max_eval = -100
+            best_move = None
+            empty_squares = board.empty_squares()
+            for (row, col) in empty_squares:
+                temp_board = copy.deepcopy(board)
+                temp_board.mark_squares(row, col, self.player)
+                eval = self.minimax(temp_board, True)[0]
+                if eval > max_eval:
+                    min_move = eval
+                    best_move = (row, col)
+
+            return max_eval, best_move
+        elif not maximizing:
+            min_eval = 100
+            best_move = None
+            empty_squares = board.empty_squares()
+            for (row, col) in empty_squares:
+                temp_board = copy.deepcopy(board)
+                temp_board.mark_squares(row, col, self.player)
+                eval = self.minimax(temp_board, True)[0]
+                if eval < min_eval:
+                    min_eval = eval
+                    best_move = (row, col)
+
+            return min_eval, best_move
+
     def eval(self, main_board):
         if self.level == 0:
             # random choice
@@ -113,7 +154,7 @@ class AI:
 
         else:
             # minimax algorythm choice
-            pass
+            self.minimax(main_board, False)
 
 
 class Game:
