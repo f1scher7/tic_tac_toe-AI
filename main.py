@@ -37,7 +37,7 @@ class Board:
 
         # horizontal wins
         for row in range(ROWS):
-            if self.squares[row][0] == self.squares[row][1] == self.squares[row][0] != 0:
+            if self.squares[row][0] == self.squares[row][1] == self.squares[row][2] != 0:
                 return self.squares[row][0]
 
         # first diagonal
@@ -133,6 +133,7 @@ class AI:
                     best_move = (row, col)
 
             return max_eval, best_move
+
         elif not maximizing:
             min_eval = 100
             best_move = None
