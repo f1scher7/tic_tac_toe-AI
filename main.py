@@ -213,6 +213,9 @@ class Game:
     def reset_board(self):
         self.__init__()
 
+    def is_over(self):
+        return self.board.final_state() != 0 or self.board.is_board_full()
+
 
 def main():
 
@@ -233,8 +236,11 @@ def main():
                 row = click_pos[1] // SQ_SIZE
                 col = click_pos[0] // SQ_SIZE
 
-                if board.is_square_empty(row, col):
+                if board.is_square_empty(row, col) and game.running:
                     game.draw_move(row, col)
+
+                    if game.is_over():
+                        game.running = False
 
             if event.type == pygame.KEYDOWN:
 
@@ -256,11 +262,14 @@ def main():
                     board = game.board
                     ai = game.ai
 
-        if game.game_mode == "ai" and game.player == ai.player:
+        if game.game_mode == "ai" and game.player == ai.player and game.running:
             pygame.display.update()
             row, col = ai.eval(board)
             pygame.time.delay(500)
             game.draw_move(row, col)
+
+            if game.is_over():
+                game.running = False
 
         pygame.display.update()
 
