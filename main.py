@@ -166,7 +166,7 @@ class Game:
 
     def __init__(self):
         self.board = Board()
-        # self.ai = AI()
+        self.ai = AI()
         self.player = 1
         self.game_mode = "ai"  # pvp or ai
         self.running = True
@@ -178,6 +178,7 @@ class Game:
         self.draw_fig(row, col)
 
     def show_lines(self):
+        screen.fill(BG_COLOR)
         # vertical
         pygame.draw.line(screen, LINE_COLOR, (SQ_SIZE, 0), (SQ_SIZE, HEIGHT), LINE_WIDTH)
         pygame.draw.line(screen, LINE_COLOR, (2 * SQ_SIZE, 0), (2 * SQ_SIZE, HEIGHT), LINE_WIDTH)
@@ -209,7 +210,8 @@ class Game:
         else:
             self.game_mode = "pvp"
 
-
+    def reset_board(self):
+        self.__init__()
 
 
 def main():
@@ -247,6 +249,12 @@ def main():
                 # 1 - random ai
                 if event.key == pygame.K_1:
                     ai.level = 1
+
+                # reset board
+                if event.key == pygame.K_r:
+                    game.reset_board()
+                    board = game.board
+                    ai = game.ai
 
         if game.game_mode == "ai" and game.player == ai.player:
             pygame.display.update()
