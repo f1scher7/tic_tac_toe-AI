@@ -203,6 +203,14 @@ class Game:
     def next_turn(self):
         self.player = self.player % 2 + 1
 
+    def change_game_mode(self):
+        if self.game_mode == "pvp":
+            self.game_mode = "ai"
+        else:
+            self.game_mode = "pvp"
+
+
+
 
 def main():
 
@@ -225,6 +233,20 @@ def main():
 
                 if board.is_square_empty(row, col):
                     game.draw_move(row, col)
+
+            if event.type == pygame.KEYDOWN:
+
+                # g - game mode
+                if event.key == pygame.K_g:
+                    game.change_game_mode()
+
+                # 0 - random ai
+                if event.key == pygame.K_0:
+                    ai.level = 0
+
+                # 1 - random ai
+                if event.key == pygame.K_1:
+                    ai.level = 1
 
         if game.game_mode == "ai" and game.player == ai.player:
             pygame.display.update()
