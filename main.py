@@ -18,7 +18,7 @@ class Board:
         self.squares = np.zeros((ROWS, COLS), dtype=int)
         self.marked_squares = 0
 
-    def final_state(self):
+    def final_state(self, show_winner=False):
         """
         @return 0 if there is a tie
         @return 1 if player 1. wins
@@ -28,8 +28,18 @@ class Board:
         # vertical wins
         for col in range(COLS):
             if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] == 1:
+                if show_winner:
+                    color = WIN_LINE_COLOR
+                    iPos = (col * SQ_SIZE + SQ_SIZE // 2, 20)
+                    fPos = (col * SQ_SIZE + SQ_SIZE // 2, HEIGHT - 20)
+                    pygame.draw.line(screen, color, iPos, fPos, LINE_WIDTH - 3)
                 return 1
             if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] == 2:
+                if show_winner:
+                    color = WIN_LINE_COLOR
+                    iPos = (col * SQ_SIZE + SQ_SIZE // 2, 20)
+                    fPos = (col * SQ_SIZE + SQ_SIZE // 2, HEIGHT - 20)
+                    pygame.draw.line(screen, color, iPos, fPos, LINE_WIDTH - 3)
                 return 2
             """
             if self.squares[0][col] == self.squares[1][col] == self.squares[2][col] != 0:
@@ -39,6 +49,11 @@ class Board:
         # horizontal wins
         for row in range(ROWS):
             if self.squares[row][0] == self.squares[row][1] == self.squares[row][2] != 0:
+                if show_winner:
+                    color = WIN_LINE_COLOR
+                    iPos = (20, row * SQ_SIZE + SQ_SIZE // 2)
+                    fPos = (WIDTH - 20, row * SQ_SIZE + SQ_SIZE // 2,)
+                    pygame.draw.line(screen, color, iPos, fPos, LINE_WIDTH - 3)
                 return self.squares[row][0]
 
         # first diagonal
@@ -48,8 +63,18 @@ class Board:
                 if row == col:
                     first_diagonal.append(self.squares[row][col])
         if first_diagonal.count(1) == len(first_diagonal):
+            if show_winner:
+                color = WIN_LINE_COLOR
+                iPos = (20, 20)
+                fPos = (WIDTH - 20, HEIGHT - 20)
+                pygame.draw.line(screen, color, iPos, fPos, LINE_WIDTH - 3)
             return 1
         if first_diagonal.count(2) == len(first_diagonal):
+            if show_winner:
+                color = WIN_LINE_COLOR
+                iPos = (20, 20)
+                fPos = (WIDTH - 20, HEIGHT - 20)
+                pygame.draw.line(screen, color, iPos, fPos, LINE_WIDTH - 3)
             return 2
 
         # second diagonal
@@ -60,8 +85,18 @@ class Board:
                 if row == col:
                     second_diagonal.append(reversed_board[row][col])
         if second_diagonal.count(1) == len(second_diagonal):
+            if show_winner:
+                color = WIN_LINE_COLOR
+                iPos = (20, HEIGHT - 20)
+                fPos = (WIDTH - 20, 20)
+                pygame.draw.line(screen, color, iPos, fPos, LINE_WIDTH - 3)
             return 1
         if second_diagonal.count(2) == len(second_diagonal):
+            if show_winner:
+                color = WIN_LINE_COLOR
+                iPos = (20, HEIGHT - 20)
+                fPos = (WIDTH - 20, 20)
+                pygame.draw.line(screen, color, iPos, fPos, LINE_WIDTH - 3)
             return 2
 
         del reversed_board
@@ -214,7 +249,7 @@ class Game:
         self.__init__()
 
     def is_over(self):
-        return self.board.final_state() != 0 or self.board.is_board_full()
+        return self.board.final_state(show_winner=True) != 0 or self.board.is_board_full()
 
 
 def main():
