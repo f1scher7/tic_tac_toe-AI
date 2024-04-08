@@ -29,6 +29,11 @@ This is a Python implementation of Tic Tac Toe game with an AI opponent. The gam
 - Press `g` to switch between Player vs Player and Player vs AI modes.
 - Press `r` to reset the game board.
 
+## Example operation
+
+![Zrzut ekranu 2024-04-08 193603](https://github.com/f1scher7/tic_tac_toe-AI/assets/115926717/d250c8b8-1764-4bd3-962f-95bff24f525a)
+
+
 ## Author
 
 - Maks Szyło - maksymilian.fischer7@gmail.com.
